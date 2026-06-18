@@ -1,11 +1,10 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Images, Binoculars, Utensils, ShoppingBag, MapPin } from "lucide-react";
-import { getDestinationBySlug } from "@/data/destinations";
+import { getDestinationBySlug, type Destination, type ThingItem } from "@/data/destinations";
 import { getPropertiesByDestination } from "@/data/properties";
 import { AccordionItem } from "@/components/AccordionItem";
 import { PropertyCard } from "@/components/PropertyCard";
-import { SectionTitle } from "@/components/SectionTitle";
 
 export const Route = createFileRoute("/destination/$slug")({
   loader: ({ params }) => {
@@ -37,7 +36,7 @@ const TABS = [
 ] as const;
 
 function DestinationDetail() {
-  const d = Route.useLoaderData();
+  const d = Route.useLoaderData() as Destination;
   const properties = getPropertiesByDestination(d.slug);
   const [famousIdx, setFamousIdx] = useState(0);
   const [itinIdx, setItinIdx] = useState(0);
@@ -85,7 +84,7 @@ function DestinationDetail() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {famousScroll.map((f) => (
+            {famousScroll.map((f: { name: string; image: string }) => (
               <div key={f.name} className="relative rounded-xl overflow-hidden aspect-square">
                 <img src={f.image} alt={f.name} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
@@ -123,7 +122,7 @@ function DestinationDetail() {
         <div className="relative">
           <div className="absolute top-5 left-0 right-0 border-t-2 border-dashed border-[var(--border)]" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative">
-            {itinSlice.map((it) => (
+            {itinSlice.map((it: { time: string; activity: string; description: string }) => (
               <div key={it.time} className="flex flex-col items-start">
                 <span className="bg-white border border-[var(--border)] rounded-full px-4 py-2 text-sm font-medium text-[var(--primary)] mb-4 relative z-10">
                   {it.time}
@@ -159,7 +158,7 @@ function DestinationDetail() {
         </div>
 
         <div className="border border-[var(--border)] rounded-xl overflow-hidden bg-white">
-          {list.map((item, i) => (
+          {(list as ThingItem[]).map((item: ThingItem, i: number) => (
             <AccordionItem key={item.name} name={item.name} description={item.description} defaultOpen={i === 0} />
           ))}
         </div>

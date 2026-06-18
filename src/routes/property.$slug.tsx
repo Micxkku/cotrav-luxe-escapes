@@ -1,6 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { MapPin, Star, Wifi, Car, Utensils, Waves, Wind, Wine, Sparkles, Dumbbell, Coffee } from "lucide-react";
-import { getPropertyBySlug, properties } from "@/data/properties";
+import { getPropertyBySlug, properties, type Property } from "@/data/properties";
 import { getDestinationBySlug } from "@/data/destinations";
 import { PropertyCard } from "@/components/PropertyCard";
 
@@ -32,7 +32,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 function PropertyDetail() {
-  const p = Route.useLoaderData();
+  const p = Route.useLoaderData() as Property;
   const destination = getDestinationBySlug(p.destinationSlug);
   const similar = properties.filter((x) => x.id !== p.id).slice(0, 3);
 
@@ -44,7 +44,7 @@ function PropertyDetail() {
           <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
         </div>
         <div className="flex md:flex-col gap-3">
-          {(p.images.slice(1, 3).length ? p.images.slice(1, 3) : [p.images[0], p.images[0]]).map((src, i) => (
+          {(p.images.slice(1, 3).length ? p.images.slice(1, 3) : [p.images[0], p.images[0]]).map((src: string, i: number) => (
             <div key={i} className="rounded-2xl overflow-hidden flex-1 aspect-[16/10] md:aspect-auto">
               <img src={src} alt={`${p.name} ${i}`} className="w-full h-full object-cover" />
             </div>
@@ -71,7 +71,7 @@ function PropertyDetail() {
 
           <h3 className="text-2xl font-black uppercase text-[var(--primary)] mb-5">Amenities</h3>
           <div className="grid sm:grid-cols-3 gap-3 mb-10">
-            {p.amenities.map((a) => {
+            {p.amenities.map((a: string) => {
               const Icon = ICONS[a.toLowerCase()] ?? Coffee;
               return (
                 <div key={a} className="flex items-center gap-3 border border-[var(--border)] rounded-xl p-4 bg-white">
