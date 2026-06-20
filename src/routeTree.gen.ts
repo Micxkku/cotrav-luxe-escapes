@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as HubsRouteImport } from './routes/hubs'
+import { Route as EventsRouteImport } from './routes/events'
 import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as CorporateRetreatsRouteImport } from './routes/corporate-retreats'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
@@ -20,9 +23,24 @@ const MembershipRoute = MembershipRouteImport.update({
   path: '/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HubsRoute = HubsRouteImport.update({
+  id: '/hubs',
+  path: '/hubs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DestinationsRoute = DestinationsRouteImport.update({
   id: '/destinations',
   path: '/destinations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorporateRetreatsRoute = CorporateRetreatsRouteImport.update({
+  id: '/corporate-retreats',
+  path: '/corporate-retreats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,14 +61,20 @@ const DestinationSlugRoute = DestinationSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
+  '/events': typeof EventsRoute
+  '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
+  '/events': typeof EventsRoute
+  '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
@@ -58,7 +82,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
+  '/events': typeof EventsRoute
+  '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
@@ -67,21 +94,30 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/corporate-retreats'
     | '/destinations'
+    | '/events'
+    | '/hubs'
     | '/membership'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/corporate-retreats'
     | '/destinations'
+    | '/events'
+    | '/hubs'
     | '/membership'
     | '/destination/$slug'
     | '/property/$slug'
   id:
     | '__root__'
     | '/'
+    | '/corporate-retreats'
     | '/destinations'
+    | '/events'
+    | '/hubs'
     | '/membership'
     | '/destination/$slug'
     | '/property/$slug'
@@ -89,7 +125,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CorporateRetreatsRoute: typeof CorporateRetreatsRoute
   DestinationsRoute: typeof DestinationsRoute
+  EventsRoute: typeof EventsRoute
+  HubsRoute: typeof HubsRoute
   MembershipRoute: typeof MembershipRoute
   DestinationSlugRoute: typeof DestinationSlugRoute
   PropertySlugRoute: typeof PropertySlugRoute
@@ -104,11 +143,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hubs': {
+      id: '/hubs'
+      path: '/hubs'
+      fullPath: '/hubs'
+      preLoaderRoute: typeof HubsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/destinations': {
       id: '/destinations'
       path: '/destinations'
       fullPath: '/destinations'
       preLoaderRoute: typeof DestinationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/corporate-retreats': {
+      id: '/corporate-retreats'
+      path: '/corporate-retreats'
+      fullPath: '/corporate-retreats'
+      preLoaderRoute: typeof CorporateRetreatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -137,7 +197,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CorporateRetreatsRoute: CorporateRetreatsRoute,
   DestinationsRoute: DestinationsRoute,
+  EventsRoute: EventsRoute,
+  HubsRoute: HubsRoute,
   MembershipRoute: MembershipRoute,
   DestinationSlugRoute: DestinationSlugRoute,
   PropertySlugRoute: PropertySlugRoute,
