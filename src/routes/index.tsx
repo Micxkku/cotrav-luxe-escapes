@@ -1,10 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Calendar, Users, Search } from "lucide-react";
+import { MapPin, Calendar as CalendarIcon, Users, Search } from "lucide-react";
+import { useState } from "react";
+import { format } from "date-fns";
 import { destinations } from "@/data/destinations";
 import { properties } from "@/data/properties";
 import { DestinationCard } from "@/components/DestinationCard";
 import { PropertyCard } from "@/components/PropertyCard";
 import { SectionTitle } from "@/components/SectionTitle";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,6 +24,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [checkIn, setCheckIn] = useState<Date>();
+  const [checkOut, setCheckOut] = useState<Date>();
+
   return (
     <div>
       {/* Hero */}
@@ -48,19 +55,41 @@ function Index() {
               <input placeholder="Destination" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
             </div>
             <div className="hidden md:block w-px bg-[var(--border)]" />
-            <div className="flex items-center gap-2 px-4 py-3 flex-1">
-              <Calendar className="w-5 h-5 text-[var(--accent)]" />
-              <input placeholder="Check-in" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
-            </div>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex items-center gap-2 px-4 py-3 flex-1 text-left">
+                  <CalendarIcon className="w-5 h-5 text-[var(--accent)]" />
+                  <span className={`text-sm ${checkIn ? "text-[var(--primary)]" : "text-[var(--text-secondary)]"}`}>
+                    {checkIn ? format(checkIn, "MMM d, yyyy") : "Check-in"}
+                  </span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
+                <Calendar mode="single" selected={checkIn} onSelect={setCheckIn} initialFocus className="p-3 pointer-events-auto" captionLayout="dropdown" />
+              </PopoverContent>
+            </Popover>
+
             <div className="hidden md:block w-px bg-[var(--border)]" />
-            <div className="flex items-center gap-2 px-4 py-3 flex-1">
-              <Calendar className="w-5 h-5 text-[var(--accent)]" />
-              <input placeholder="Check-out" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
-            </div>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex items-center gap-2 px-4 py-3 flex-1 text-left">
+                  <CalendarIcon className="w-5 h-5 text-[var(--accent)]" />
+                  <span className={`text-sm ${checkOut ? "text-[var(--primary)]" : "text-[var(--text-secondary)]"}`}>
+                    {checkOut ? format(checkOut, "MMM d, yyyy") : "Check-out"}
+                  </span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
+                <Calendar mode="single" selected={checkOut} onSelect={setCheckOut} initialFocus className="p-3 pointer-events-auto" captionLayout="dropdown" disabled={checkIn ? { before: checkIn } : undefined} />
+              </PopoverContent>
+            </Popover>
+
             <div className="hidden md:block w-px bg-[var(--border)]" />
             <div className="flex items-center gap-2 px-4 py-3 flex-1">
               <Users className="w-5 h-5 text-[var(--accent)]" />
-              <input placeholder="Guests" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
+              <input placeholder="Rooms" aria-label="Rooms" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
             </div>
             <button className="bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--primary)] font-bold px-8 py-4 rounded-full transition-colors duration-200 flex items-center justify-center gap-2">
               <Search className="w-4 h-4" /> Search
