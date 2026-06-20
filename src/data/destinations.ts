@@ -68,7 +68,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "2", slug: "ranthambore", name: "Ranthambore",
-    image: img("photo-1605338803155-8f0d0f5f0f50"),
+    image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800",
     description: "A dramatic landscape of dry deciduous forest and ancient fort ruins, Ranthambore is one of India's finest tiger reserves and a stage for storied wildlife encounters.",
     famousFor: [
       { name: "Ranthambore Fort", image: img("photo-1564507592333-c60657eea523") },
