@@ -182,7 +182,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "5", slug: "rishikesh", name: "Rishikesh",
-    image: img("photo-1591018653781-9b46c1ba4222"),
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
     description: "Where the Ganges leaves the mountains — a confluence of ashrams, white-water rapids and forested ridgelines. Rishikesh is India's wellness capital reimagined for luxury seekers.",
     famousFor: [
       { name: "Ganga Aarti", image: img("photo-1591018653781-9b46c1ba4222") },
