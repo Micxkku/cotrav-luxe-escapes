@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Calendar as CalendarIcon, Users, Search } from "lucide-react";
-import { useState } from "react";
+import { MapPin, Calendar as CalendarIcon, Users, Search, ChevronDown } from "lucide-react";
+import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { destinations } from "@/data/destinations";
 import { properties } from "@/data/properties";
+import { hubs } from "@/data/hubsData";
 import { DestinationCard } from "@/components/DestinationCard";
 import { PropertyCard } from "@/components/PropertyCard";
 import { SectionTitle } from "@/components/SectionTitle";
+import { PartnerBrands } from "@/components/PartnerBrands";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
