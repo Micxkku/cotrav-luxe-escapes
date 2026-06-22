@@ -180,6 +180,9 @@ function Index() {
         </div>
       </section>
 
+      <PartnerBrands />
+
+
       {/* Featured Staycations */}
       <section className="max-w-[1400px] mx-auto px-6 py-20">
         <div className="mb-12">
