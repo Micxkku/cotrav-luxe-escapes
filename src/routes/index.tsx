@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Calendar as CalendarIcon, Users, Search } from "lucide-react";
-import { useState } from "react";
+import { MapPin, Calendar as CalendarIcon, Users, Search, ChevronDown } from "lucide-react";
+import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { destinations } from "@/data/destinations";
 import { properties } from "@/data/properties";
+import { hubs } from "@/data/hubsData";
 import { DestinationCard } from "@/components/DestinationCard";
 import { PropertyCard } from "@/components/PropertyCard";
 import { SectionTitle } from "@/components/SectionTitle";
+import { PartnerBrands } from "@/components/PartnerBrands";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -26,6 +28,15 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
+  const [hubSlug, setHubSlug] = useState<string>("");
+  const [destination, setDestination] = useState<string>("");
+  const [destOpen, setDestOpen] = useState(false);
+
+  const selectedHub = useMemo(() => hubs.find((h) => h.slug === hubSlug), [hubSlug]);
+  const destinationOptions = useMemo(
+    () => (selectedHub ? selectedHub.spokes.map((s) => s.name) : hubs.flatMap((h) => h.spokes.map((s) => s.name))),
+    [selectedHub],
+  );
 
   return (
     <div>
@@ -38,7 +49,7 @@ function Index() {
         />
         <div className="absolute inset-0 bg-[var(--primary)] opacity-60" />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center text-white">
           <p className="text-[var(--accent)] uppercase text-sm tracking-[0.3em] mb-4 font-semibold">
             Curated Luxury Staycations
           </p>
@@ -49,10 +60,65 @@ function Index() {
             Handpicked luxury villas, resorts &amp; private properties across India's finest escapes
           </p>
 
-          <div className="bg-white rounded-full p-2 shadow-2xl flex flex-col md:flex-row items-stretch gap-2 max-w-4xl mx-auto">
-            <div className="flex items-center gap-2 px-4 py-3 flex-1">
+          <div className="bg-white rounded-full p-2 shadow-2xl flex flex-col md:flex-row items-stretch gap-2 max-w-5xl mx-auto">
+            {/* Hub selector */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex items-center gap-2 px-4 py-3 flex-1 text-left">
+                  <MapPin className="w-5 h-5 text-[var(--accent)]" />
+                  <span className={`text-sm flex-1 ${hubSlug ? "text-[var(--primary)]" : "text-[var(--text-secondary)]"}`}>
+                    {selectedHub ? selectedHub.name : "Hub"}
+                  </span>
+                  <ChevronDown className="w-4 h-4 text-[var(--text-secondary)]" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-1" align="start">
+                <button
+                  onClick={() => { setHubSlug(""); setDestination(""); }}
+                  className="w-full text-left px-3 py-2 text-sm rounded hover:bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
+                >
+                  All Hubs
+                </button>
+                {hubs.map((h) => (
+                  <button
+                    key={h.slug}
+                    onClick={() => { setHubSlug(h.slug); setDestination(""); }}
+                    className="w-full text-left px-3 py-2 text-sm rounded hover:bg-[var(--bg-secondary)] text-[var(--primary)]"
+                  >
+                    {h.name}
+                  </button>
+                ))}
+              </PopoverContent>
+            </Popover>
+            <div className="hidden md:block w-px bg-[var(--border)]" />
+
+            {/* Destination (filtered by hub) */}
+            <div className="flex items-center gap-2 px-4 py-3 flex-1 relative">
               <MapPin className="w-5 h-5 text-[var(--accent)]" />
-              <input placeholder="Destination" className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full" />
+              <input
+                value={destination}
+                onChange={(e) => { setDestination(e.target.value); setDestOpen(true); }}
+                onFocus={() => setDestOpen(true)}
+                onBlur={() => setTimeout(() => setDestOpen(false), 150)}
+                placeholder="Destination"
+                className="bg-transparent text-[var(--primary)] placeholder:text-[var(--text-secondary)] text-sm outline-none w-full"
+              />
+              {destOpen && destinationOptions.length > 0 && (
+                <div className="absolute top-full left-0 mt-1 w-full bg-white border border-[var(--border)] rounded-lg shadow-xl max-h-64 overflow-y-auto z-50 text-left">
+                  {destinationOptions
+                    .filter((d) => d.toLowerCase().includes(destination.toLowerCase()))
+                    .slice(0, 12)
+                    .map((d) => (
+                      <button
+                        key={d}
+                        onMouseDown={() => { setDestination(d); setDestOpen(false); }}
+                        className="block w-full text-left px-3 py-2 text-sm hover:bg-[var(--bg-secondary)] text-[var(--primary)]"
+                      >
+                        {d}
+                      </button>
+                    ))}
+                </div>
+              )}
             </div>
             <div className="hidden md:block w-px bg-[var(--border)]" />
 
@@ -113,6 +179,9 @@ function Index() {
           ))}
         </div>
       </section>
+
+      <PartnerBrands />
+
 
       {/* Featured Staycations */}
       <section className="max-w-[1400px] mx-auto px-6 py-20">
