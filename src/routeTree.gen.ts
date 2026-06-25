@@ -15,6 +15,7 @@ import { Route as HubsRouteImport } from './routes/hubs'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as CorporateRetreatsRouteImport } from './routes/corporate-retreats'
+import { Route as BecomeAHostRouteImport } from './routes/become-a-host'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
@@ -49,6 +50,11 @@ const CorporateRetreatsRoute = CorporateRetreatsRouteImport.update({
   path: '/corporate-retreats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BecomeAHostRoute = BecomeAHostRouteImport.update({
+  id: '/become-a-host',
+  path: '/become-a-host',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,6 +73,7 @@ const DestinationSlugRoute = DestinationSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/become-a-host'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/become-a-host'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/become-a-host'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BecomeAHostRoute: typeof BecomeAHostRoute
   CorporateRetreatsRoute: typeof CorporateRetreatsRoute
   DestinationsRoute: typeof DestinationsRoute
   EventsRoute: typeof EventsRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CorporateRetreatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/become-a-host': {
+      id: '/become-a-host'
+      path: '/become-a-host'
+      fullPath: '/become-a-host'
+      preLoaderRoute: typeof BecomeAHostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BecomeAHostRoute: BecomeAHostRoute,
   CorporateRetreatsRoute: CorporateRetreatsRoute,
   DestinationsRoute: DestinationsRoute,
   EventsRoute: EventsRoute,
