@@ -1,57 +1,68 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, ArrowRight } from "lucide-react";
-
-const hubs = [
-  { slug: "delhi", name: "Delhi Hub", count: 12, desc: "Curated weekend escapes within a 4-hour drive of the capital — heritage havelis, forest retreats and Aravalli villas.", image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80" },
-  { slug: "mumbai", name: "Mumbai Hub", count: 10, desc: "Coastal getaways and Sahyadri hill villas a short drive from the city — from Alibaug to Lonavala.", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1200&q=80" },
-  { slug: "bengaluru", name: "Bengaluru Hub", count: 9, desc: "Coffee estates, vineyards and Western Ghats hideaways — slow weekends from Coorg to Chikmagalur.", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80" },
-  { slug: "rajasthan", name: "Rajasthan Hub", count: 14, desc: "A circuit of palaces and desert camps — Udaipur, Jaipur, Jaisalmer and Ranthambore under one itinerary.", image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80" },
-  { slug: "wellness", name: "Wellness Circuit", count: 8, desc: "Ayurveda, yoga and forest bathing — Rishikesh, Kerala backwaters and Himalayan wellness retreats.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80" },
-];
+import { MapPin, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { hubs } from "@/data/hubsData";
 
 export const Route = createFileRoute("/hubs")({
   head: () => ({
     meta: [
       { title: "Hubs — CoTrav Stays" },
-      { name: "description", content: "Explore CoTrav's curated hubs — themed staycation circuits across India's finest regions." },
+      { name: "description", content: "Explore CoTrav's curated hub circuits across India — each hub connects to luxury staycations within a 4-6 hour drive." },
     ],
   }),
   component: HubsPage,
 });
 
 function HubsPage() {
+  const [expanded, setExpanded] = useState<string | null>(hubs[0]?.slug ?? null);
+
   return (
     <div className="pt-20">
-      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1920&q=80" alt="Hubs" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[var(--primary)] opacity-70" />
-        <div className="relative z-10 text-center text-white px-6">
-          <p className="text-[var(--accent)] uppercase text-sm tracking-[0.3em] mb-4 font-semibold">Themed Circuits</p>
-          <h1 className="text-4xl md:text-6xl font-black mb-4">EXPLORE BY HUB</h1>
-          <p className="text-lg max-w-2xl mx-auto text-white/90">Five curated regions, each with its own character — pick the circuit that matches your weekend.</p>
-        </div>
+      <section className="bg-[var(--primary)] text-white py-20 px-6 text-center">
+        <p className="text-[var(--accent)] uppercase text-sm tracking-[0.3em] mb-4 font-semibold">Hub & Spoke Network</p>
+        <h1 className="text-4xl md:text-6xl font-black mb-4">EXPLORE BY <span className="text-[var(--accent)]">HUB</span></h1>
+        <p className="text-lg max-w-2xl mx-auto text-white/80">11 curated hub circuits across India. Each hub connects to luxury staycations within a short drive.</p>
       </section>
 
-      <section className="max-w-[1400px] mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {hubs.map((h) => (
-            <Link key={h.slug} to="/destinations" className="group rounded-2xl overflow-hidden bg-white shadow-[var(--card-shadow)] hover:shadow-xl transition-all">
-              <div className="relative h-56 overflow-hidden">
-                <img src={h.image} alt={h.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-[var(--accent)] text-[var(--primary)] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                  <MapPin className="w-3 h-3" /> {h.count} destinations
+      <section className="max-w-[1200px] mx-auto px-6 py-16 space-y-4">
+        {hubs.map((h) => {
+          const isOpen = expanded === h.slug;
+          return (
+            <div key={h.slug} id={`hub-${h.slug}`} className="bg-white border border-[var(--border)] rounded-2xl overflow-hidden scroll-mt-24">
+              <button
+                onClick={() => setExpanded(isOpen ? null : h.slug)}
+                className="w-full flex items-center justify-between p-6 hover:bg-[var(--bg-secondary)] transition-colors"
+              >
+                <div className="flex items-center gap-4 text-left">
+                  <div className="w-12 h-12 rounded-full bg-[var(--accent)] flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-[var(--primary)]" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-xl text-[var(--primary)]">{h.name}</h3>
+                    <p className="text-sm text-[var(--text-secondary)]">{h.spokes.length} destinations</p>
+                  </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-black text-xl text-[var(--primary)] mb-2">{h.name}</h3>
-                <p className="text-sm text-[var(--text-secondary)] mb-4">{h.desc}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-bold text-[var(--accent)] group-hover:gap-2 transition-all">
-                  Explore hub <ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+                <ChevronDown className={`w-5 h-5 text-[var(--primary)] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+              </button>
+              {isOpen && (
+                <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-secondary)]">
+                  <div className="flex flex-wrap gap-2">
+                    {h.spokes.map((s) => (
+                      <Link
+                        key={s.slug}
+                        to="/destination/$slug"
+                        params={{ slug: s.slug }}
+                        className="px-4 py-2 bg-white border border-[var(--border)] rounded-full text-sm font-semibold text-[var(--primary)] hover:bg-[var(--accent)] hover:border-[var(--accent)] transition-colors"
+                      >
+                        {s.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </section>
     </div>
   );
