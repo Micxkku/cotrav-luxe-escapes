@@ -15,65 +15,28 @@ import { Route as HubsRouteImport } from './routes/hubs'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as CorporateRetreatsRouteImport } from './routes/corporate-retreats'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BecomeAHostRouteImport } from './routes/become-a-host'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
 
-const WhyUsRoute = WhyUsRouteImport.update({
-  id: '/why-us',
-  path: '/why-us',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MembershipRoute = MembershipRouteImport.update({
-  id: '/membership',
-  path: '/membership',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubsRoute = HubsRouteImport.update({
-  id: '/hubs',
-  path: '/hubs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventsRoute = EventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DestinationsRoute = DestinationsRouteImport.update({
-  id: '/destinations',
-  path: '/destinations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CorporateRetreatsRoute = CorporateRetreatsRouteImport.update({
-  id: '/corporate-retreats',
-  path: '/corporate-retreats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BecomeAHostRoute = BecomeAHostRouteImport.update({
-  id: '/become-a-host',
-  path: '/become-a-host',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PropertySlugRoute = PropertySlugRouteImport.update({
-  id: '/property/$slug',
-  path: '/property/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DestinationSlugRoute = DestinationSlugRouteImport.update({
-  id: '/destination/$slug',
-  path: '/destination/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const WhyUsRoute = WhyUsRouteImport.update({ id: '/why-us', path: '/why-us', getParentRoute: () => rootRouteImport } as any)
+const MembershipRoute = MembershipRouteImport.update({ id: '/membership', path: '/membership', getParentRoute: () => rootRouteImport } as any)
+const HubsRoute = HubsRouteImport.update({ id: '/hubs', path: '/hubs', getParentRoute: () => rootRouteImport } as any)
+const EventsRoute = EventsRouteImport.update({ id: '/events', path: '/events', getParentRoute: () => rootRouteImport } as any)
+const DestinationsRoute = DestinationsRouteImport.update({ id: '/destinations', path: '/destinations', getParentRoute: () => rootRouteImport } as any)
+const CorporateRetreatsRoute = CorporateRetreatsRouteImport.update({ id: '/corporate-retreats', path: '/corporate-retreats', getParentRoute: () => rootRouteImport } as any)
+const CompareRoute = CompareRouteImport.update({ id: '/compare', path: '/compare', getParentRoute: () => rootRouteImport } as any)
+const BecomeAHostRoute = BecomeAHostRouteImport.update({ id: '/become-a-host', path: '/become-a-host', getParentRoute: () => rootRouteImport } as any)
+const IndexRoute = IndexRouteImport.update({ id: '/', path: '/', getParentRoute: () => rootRouteImport } as any)
+const PropertySlugRoute = PropertySlugRouteImport.update({ id: '/property/$slug', path: '/property/$slug', getParentRoute: () => rootRouteImport } as any)
+const DestinationSlugRoute = DestinationSlugRouteImport.update({ id: '/destination/$slug', path: '/destination/$slug', getParentRoute: () => rootRouteImport } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/become-a-host': typeof BecomeAHostRoute
+  '/compare': typeof CompareRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
@@ -83,22 +46,12 @@ export interface FileRoutesByFullPath {
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/become-a-host': typeof BecomeAHostRoute
-  '/corporate-retreats': typeof CorporateRetreatsRoute
-  '/destinations': typeof DestinationsRoute
-  '/events': typeof EventsRoute
-  '/hubs': typeof HubsRoute
-  '/membership': typeof MembershipRoute
-  '/why-us': typeof WhyUsRoute
-  '/destination/$slug': typeof DestinationSlugRoute
-  '/property/$slug': typeof PropertySlugRoute
-}
+export interface FileRoutesByTo extends FileRoutesByFullPath {}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/become-a-host': typeof BecomeAHostRoute
+  '/compare': typeof CompareRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
@@ -110,46 +63,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/become-a-host'
-    | '/corporate-retreats'
-    | '/destinations'
-    | '/events'
-    | '/hubs'
-    | '/membership'
-    | '/why-us'
-    | '/destination/$slug'
-    | '/property/$slug'
+  fullPaths: '/' | '/become-a-host' | '/compare' | '/corporate-retreats' | '/destinations' | '/events' | '/hubs' | '/membership' | '/why-us' | '/destination/$slug' | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/become-a-host'
-    | '/corporate-retreats'
-    | '/destinations'
-    | '/events'
-    | '/hubs'
-    | '/membership'
-    | '/why-us'
-    | '/destination/$slug'
-    | '/property/$slug'
-  id:
-    | '__root__'
-    | '/'
-    | '/become-a-host'
-    | '/corporate-retreats'
-    | '/destinations'
-    | '/events'
-    | '/hubs'
-    | '/membership'
-    | '/why-us'
-    | '/destination/$slug'
-    | '/property/$slug'
+  to: '/' | '/become-a-host' | '/compare' | '/corporate-retreats' | '/destinations' | '/events' | '/hubs' | '/membership' | '/why-us' | '/destination/$slug' | '/property/$slug'
+  id: '__root__' | '/' | '/become-a-host' | '/compare' | '/corporate-retreats' | '/destinations' | '/events' | '/hubs' | '/membership' | '/why-us' | '/destination/$slug' | '/property/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BecomeAHostRoute: typeof BecomeAHostRoute
+  CompareRoute: typeof CompareRoute
   CorporateRetreatsRoute: typeof CorporateRetreatsRoute
   DestinationsRoute: typeof DestinationsRoute
   EventsRoute: typeof EventsRoute
@@ -162,91 +85,31 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/why-us': {
-      id: '/why-us'
-      path: '/why-us'
-      fullPath: '/why-us'
-      preLoaderRoute: typeof WhyUsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/membership': {
-      id: '/membership'
-      path: '/membership'
-      fullPath: '/membership'
-      preLoaderRoute: typeof MembershipRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hubs': {
-      id: '/hubs'
-      path: '/hubs'
-      fullPath: '/hubs'
-      preLoaderRoute: typeof HubsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/events': {
-      id: '/events'
-      path: '/events'
-      fullPath: '/events'
-      preLoaderRoute: typeof EventsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/destinations': {
-      id: '/destinations'
-      path: '/destinations'
-      fullPath: '/destinations'
-      preLoaderRoute: typeof DestinationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/corporate-retreats': {
-      id: '/corporate-retreats'
-      path: '/corporate-retreats'
-      fullPath: '/corporate-retreats'
-      preLoaderRoute: typeof CorporateRetreatsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/become-a-host': {
-      id: '/become-a-host'
-      path: '/become-a-host'
-      fullPath: '/become-a-host'
-      preLoaderRoute: typeof BecomeAHostRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/property/$slug': {
-      id: '/property/$slug'
-      path: '/property/$slug'
-      fullPath: '/property/$slug'
-      preLoaderRoute: typeof PropertySlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/destination/$slug': {
-      id: '/destination/$slug'
-      path: '/destination/$slug'
-      fullPath: '/destination/$slug'
-      preLoaderRoute: typeof DestinationSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    '/why-us': { id: '/why-us'; path: '/why-us'; fullPath: '/why-us'; preLoaderRoute: typeof WhyUsRouteImport; parentRoute: typeof rootRouteImport }
+    '/membership': { id: '/membership'; path: '/membership'; fullPath: '/membership'; preLoaderRoute: typeof MembershipRouteImport; parentRoute: typeof rootRouteImport }
+    '/hubs': { id: '/hubs'; path: '/hubs'; fullPath: '/hubs'; preLoaderRoute: typeof HubsRouteImport; parentRoute: typeof rootRouteImport }
+    '/events': { id: '/events'; path: '/events'; fullPath: '/events'; preLoaderRoute: typeof EventsRouteImport; parentRoute: typeof rootRouteImport }
+    '/destinations': { id: '/destinations'; path: '/destinations'; fullPath: '/destinations'; preLoaderRoute: typeof DestinationsRouteImport; parentRoute: typeof rootRouteImport }
+    '/corporate-retreats': { id: '/corporate-retreats'; path: '/corporate-retreats'; fullPath: '/corporate-retreats'; preLoaderRoute: typeof CorporateRetreatsRouteImport; parentRoute: typeof rootRouteImport }
+    '/compare': { id: '/compare'; path: '/compare'; fullPath: '/compare'; preLoaderRoute: typeof CompareRouteImport; parentRoute: typeof rootRouteImport }
+    '/become-a-host': { id: '/become-a-host'; path: '/become-a-host'; fullPath: '/become-a-host'; preLoaderRoute: typeof BecomeAHostRouteImport; parentRoute: typeof rootRouteImport }
+    '/': { id: '/'; path: '/'; fullPath: '/'; preLoaderRoute: typeof IndexRouteImport; parentRoute: typeof rootRouteImport }
+    '/property/$slug': { id: '/property/$slug'; path: '/property/$slug'; fullPath: '/property/$slug'; preLoaderRoute: typeof PropertySlugRouteImport; parentRoute: typeof rootRouteImport }
+    '/destination/$slug': { id: '/destination/$slug'; path: '/destination/$slug'; fullPath: '/destination/$slug'; preLoaderRoute: typeof DestinationSlugRouteImport; parentRoute: typeof rootRouteImport }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  BecomeAHostRoute: BecomeAHostRoute,
-  CorporateRetreatsRoute: CorporateRetreatsRoute,
-  DestinationsRoute: DestinationsRoute,
-  EventsRoute: EventsRoute,
-  HubsRoute: HubsRoute,
-  MembershipRoute: MembershipRoute,
-  WhyUsRoute: WhyUsRoute,
-  DestinationSlugRoute: DestinationSlugRoute,
-  PropertySlugRoute: PropertySlugRoute,
+  IndexRoute,
+  BecomeAHostRoute,
+  CompareRoute,
+  CorporateRetreatsRoute,
+  DestinationsRoute,
+  EventsRoute,
+  HubsRoute,
+  MembershipRoute,
+  WhyUsRoute,
+  DestinationSlugRoute,
+  PropertySlugRoute,
 }
-export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
