@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhyUsRouteImport } from './routes/why-us'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as HubsRouteImport } from './routes/hubs'
 import { Route as EventsRouteImport } from './routes/events'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
 
+const WhyUsRoute = WhyUsRouteImport.update({
+  id: '/why-us',
+  path: '/why-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesById: FileRoutesById
@@ -130,12 +142,20 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   HubsRoute: typeof HubsRoute
   MembershipRoute: typeof MembershipRoute
+  WhyUsRoute: typeof WhyUsRoute
   DestinationSlugRoute: typeof DestinationSlugRoute
   PropertySlugRoute: typeof PropertySlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/why-us': {
+      id: '/why-us'
+      path: '/why-us'
+      fullPath: '/why-us'
+      preLoaderRoute: typeof WhyUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/membership': {
       id: '/membership'
       path: '/membership'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   HubsRoute: HubsRoute,
   MembershipRoute: MembershipRoute,
+  WhyUsRoute: WhyUsRoute,
   DestinationSlugRoute: DestinationSlugRoute,
   PropertySlugRoute: PropertySlugRoute,
 }
