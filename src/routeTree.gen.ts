@@ -9,15 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhyUsRouteImport } from './routes/why-us'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as HubsRouteImport } from './routes/hubs'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as CorporateRetreatsRouteImport } from './routes/corporate-retreats'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as BecomeAHostRouteImport } from './routes/become-a-host'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
 
+const WhyUsRoute = WhyUsRouteImport.update({
+  id: '/why-us',
+  path: '/why-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
@@ -43,6 +51,16 @@ const CorporateRetreatsRoute = CorporateRetreatsRouteImport.update({
   path: '/corporate-retreats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeAHostRoute = BecomeAHostRouteImport.update({
+  id: '/become-a-host',
+  path: '/become-a-host',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,32 +79,41 @@ const DestinationSlugRoute = DestinationSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
+  '/compare': typeof CompareRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
+  '/compare': typeof CompareRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/become-a-host': typeof BecomeAHostRoute
+  '/compare': typeof CompareRoute
   '/corporate-retreats': typeof CorporateRetreatsRoute
   '/destinations': typeof DestinationsRoute
   '/events': typeof EventsRoute
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
+  '/why-us': typeof WhyUsRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -94,48 +121,67 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/become-a-host'
+    | '/compare'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/become-a-host'
+    | '/compare'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   id:
     | '__root__'
     | '/'
+    | '/become-a-host'
+    | '/compare'
     | '/corporate-retreats'
     | '/destinations'
     | '/events'
     | '/hubs'
     | '/membership'
+    | '/why-us'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BecomeAHostRoute: typeof BecomeAHostRoute
+  CompareRoute: typeof CompareRoute
   CorporateRetreatsRoute: typeof CorporateRetreatsRoute
   DestinationsRoute: typeof DestinationsRoute
   EventsRoute: typeof EventsRoute
   HubsRoute: typeof HubsRoute
   MembershipRoute: typeof MembershipRoute
+  WhyUsRoute: typeof WhyUsRoute
   DestinationSlugRoute: typeof DestinationSlugRoute
   PropertySlugRoute: typeof PropertySlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/why-us': {
+      id: '/why-us'
+      path: '/why-us'
+      fullPath: '/why-us'
+      preLoaderRoute: typeof WhyUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/membership': {
       id: '/membership'
       path: '/membership'
@@ -171,6 +217,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CorporateRetreatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-a-host': {
+      id: '/become-a-host'
+      path: '/become-a-host'
+      fullPath: '/become-a-host'
+      preLoaderRoute: typeof BecomeAHostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,11 +257,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BecomeAHostRoute: BecomeAHostRoute,
+  CompareRoute: CompareRoute,
   CorporateRetreatsRoute: CorporateRetreatsRoute,
   DestinationsRoute: DestinationsRoute,
   EventsRoute: EventsRoute,
   HubsRoute: HubsRoute,
   MembershipRoute: MembershipRoute,
+  WhyUsRoute: WhyUsRoute,
   DestinationSlugRoute: DestinationSlugRoute,
   PropertySlugRoute: PropertySlugRoute,
 }
