@@ -20,6 +20,7 @@ import { Route as BecomeAHostRouteImport } from './routes/become-a-host'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PropertySlugRouteImport } from './routes/property.$slug'
 import { Route as DestinationSlugRouteImport } from './routes/destination.$slug'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const WhyUsRoute = WhyUsRouteImport.update({
   id: '/why-us',
@@ -76,6 +77,11 @@ const DestinationSlugRoute = DestinationSlugRouteImport.update({
   path: '/destination/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/why-us': typeof WhyUsRoute
+  '/api/chat': typeof ApiChatRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/why-us': typeof WhyUsRoute
+  '/api/chat': typeof ApiChatRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/hubs': typeof HubsRoute
   '/membership': typeof MembershipRoute
   '/why-us': typeof WhyUsRoute
+  '/api/chat': typeof ApiChatRoute
   '/destination/$slug': typeof DestinationSlugRoute
   '/property/$slug': typeof PropertySlugRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/hubs'
     | '/membership'
     | '/why-us'
+    | '/api/chat'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/hubs'
     | '/membership'
     | '/why-us'
+    | '/api/chat'
     | '/destination/$slug'
     | '/property/$slug'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/hubs'
     | '/membership'
     | '/why-us'
+    | '/api/chat'
     | '/destination/$slug'
     | '/property/$slug'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   HubsRoute: typeof HubsRoute
   MembershipRoute: typeof MembershipRoute
   WhyUsRoute: typeof WhyUsRoute
+  ApiChatRoute: typeof ApiChatRoute
   DestinationSlugRoute: typeof DestinationSlugRoute
   PropertySlugRoute: typeof PropertySlugRoute
 }
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DestinationSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   HubsRoute: HubsRoute,
   MembershipRoute: MembershipRoute,
   WhyUsRoute: WhyUsRoute,
+  ApiChatRoute: ApiChatRoute,
   DestinationSlugRoute: DestinationSlugRoute,
   PropertySlugRoute: PropertySlugRoute,
 }

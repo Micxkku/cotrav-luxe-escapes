@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { ChatbotWidget } from "../components/ChatbotWidget";
 
 function NotFoundComponent() {
   return (
@@ -123,6 +124,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <ChatbotWidget />
     </QueryClientProvider>
   );
 }
